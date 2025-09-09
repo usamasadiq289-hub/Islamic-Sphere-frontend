@@ -1,0 +1,326 @@
+.prayer-container {
+  min-height: 90vh;
+  background-color: #f9fafb;
+  padding-top: 110px;
+}
+
+.prayer-content {
+  max-width: 1650px;
+  width: 100%;
+  margin: 0 auto;
+  padding-left: 2vw;
+  padding-right: 2vw;
+}
+
+.prayer-layout {
+  display: flex;
+  gap: 2rem;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.prayer-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.topics-sidebar {
+  width: 250px;
+  padding: 1.5rem;
+  border-right: 1px solid #e5e7eb;
+}
+
+.topic-button {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  background: transparent;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.topic-button:hover {
+  background-color: #f3f4f6;
+}
+
+.topic-button.active {
+  background-color: #4F46E5;
+  color: white;
+}
+
+.topic-icon {
+  font-size: 1.25rem;
+}
+
+.topic-content {
+  flex: 1;
+  padding: 2rem;
+}
+
+.topic-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+}
+
+.content-list {
+  list-style: none;
+  padding: 0;
+}
+
+.content-item {
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  color: #4b5563;
+}
+
+.content-item strong {
+  color: #4F46E5;
+  margin-right: 0.5rem;
+}
+
+/* --- Footer styles from Home.css --- */
+.amazing-footer {
+  position: relative;
+  background: linear-gradient(135deg, #022530, #033642);
+  color: white;
+  overflow: hidden;
+  padding: 0;
+  margin-top: 6rem;
+  z-index: 1;
+}
+
+/* ... (copy all the rest of the footer styles) ... */
+
+/* Prayer Calendar Styling */
+.prayer-calendar {
+  margin-top: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-header {
+  display: grid;
+  grid-template-columns: 3.5rem repeat(7, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  align-items: center;
+}
+
+.calendar-day-header {
+  text-align: center;
+  color: #055160;
+  font-weight: bold;
+  font-size: 0.875rem;
+  padding: 0.5rem 0.25rem;
+}
+
+.calendar-prayer-row {
+  display: grid;
+  grid-template-columns: 3.5rem repeat(7, 1fr);
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.calendar-prayer-name {
+  width: 3.5rem;
+  font-size: 0.75rem;
+  color: #055160;
+  font-weight: 600;
+  text-align: left;
+  padding: 0.25rem;
+}
+
+.calendar-prayer-circle {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  margin: 0 auto;
+  transition: all 0.2s ease;
+  font-weight: bold;
+}
+
+.calendar-prayer-circle.completed {
+  background: linear-gradient(135deg, #e0c33e 0%, #055160 100%);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.calendar-prayer-circle.incomplete {
+  background-color: #f3f4f6;
+  color: #d1d5db;
+  border: 2px solid #e5e7eb;
+}
+
+.calendar-prayer-circle.future {
+  background-color: #f9f9f9;
+  color: #e5e7eb;
+  border: 2px solid #f3f4f6;
+}
+
+.calendar-prayer-circle.today {
+  border: 3px solid #e0c33e;
+  box-shadow: 0 0 0 2px rgba(224, 195, 62, 0.3);
+}
+
+.calendar-prayer-circle:hover {
+  transform: scale(1.05);
+}
+
+/* City Search Styling */
+.city-search-wrapper {
+  position: relative;
+}
+
+.city-search-wrapper input {
+  width: 300px;
+  padding: 12px 16px;
+  border: 2px solid rgba(5, 81, 96, 0.2);
+  border-radius: 12px;
+  font-size: 14px;
+  background-color: rgba(255, 255, 255, 0.8);
+  outline: none;
+  transition: border-color 0.3s ease;
+  font-family: inherit;
+}
+
+.city-search-wrapper input:focus {
+  border-color: #e0c33e;
+}
+
+.city-search-wrapper input::placeholder {
+  color: rgba(5, 81, 96, 0.6);
+}
+
+.city-search-wrapper ul {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0 0;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(5, 81, 96, 0.2);
+  max-height: 200px;
+  overflow-y: auto;
+  position: absolute;
+  z-index: 50;
+  width: 300px;
+  border: 1px solid rgba(5, 81, 96, 0.1);
+}
+
+.city-search-wrapper li {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: #055160;
+  font-weight: 500;
+}
+
+.city-search-wrapper li:hover {
+  background-color: rgba(224, 195, 62, 0.1);
+}
+
+.city-search-wrapper li:last-child {
+  border-bottom: none;
+}
+
+.city-search-wrapper p {
+  padding: 12px 16px;
+  margin: 0;
+  text-align: center;
+  color: rgba(5, 81, 96, 0.7);
+  font-style: italic;
+}
+
+/* Modal Styling */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.modal h2 {
+  color: #055160;
+  margin-bottom: 16px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.modal ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.modal li {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal li:last-child {
+  border-bottom: none;
+}
+
+.modal li strong {
+  color: #055160;
+  font-weight: 600;
+}
+
+.modal button {
+  background: linear-gradient(135deg, #055160 0%, #e0c33e 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 16px;
+  transition: transform 0.2s ease;
+}
+
+.modal button:hover {
+  transform: translateY(-2px);
+}

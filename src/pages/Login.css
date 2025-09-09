@@ -1,0 +1,145 @@
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(5, 81, 96, 0.1) 0%, rgba(5, 81, 96, 0.05) 100%);
+  background-image: url('https://img.freepik.com/free-photo/majestic-mosque-islamic-new-year-celebration-with-fantasy-architecture_23-2151457458.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 2rem;
+}
+
+.login-card {
+  background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(5px); /* optional: soft blur effect behind card */
+  padding: 3rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(5, 81, 96, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-card h2 {
+  color: #055160;
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.subtitle {
+  color: #666;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.form-group {
+  position: relative;
+}
+
+.form-input {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid rgba(5, 81, 96, 0.1);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #055160;
+  box-shadow: 0 0 0 3px rgba(5, 81, 96, 0.1);
+}
+
+.form-input::placeholder {
+  color: #999;
+}
+
+.forgot-password {
+  text-align: right;
+  margin-bottom: 1rem;
+  
+  
+}
+
+.forgot-password a {
+  color: #3b82f6;
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.2s;
+}
+
+.forgot-password a:hover {
+  color: #2563eb;
+}
+
+.login-button {
+  background: #055160;
+  color: white;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.login-button:hover {
+  background: #044352;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(5, 81, 96, 0.2);
+}
+
+.login-button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.signup-link {
+  margin-top: 2rem;
+  color: white;
+}
+
+.signup-link a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.signup-link a:hover {
+  color: #044352;
+  text-decoration: underline;
+}
+
+.login-toast {
+  z-index: 9999; /* Ensure the toast is on top of other elements */
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 2rem;
+  }
+
+  .login-card h2 {
+    font-size: 1.8rem;
+  }
+
+  .form-input {
+    padding: 0.8rem;
+  }
+}

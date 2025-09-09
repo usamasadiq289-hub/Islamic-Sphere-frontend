@@ -1,0 +1,15 @@
+.faq-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 20px;
+  text-align: center;
+}
+
+.faq-container h1 {
+  font-size: 2.5rem;
+  color: #055160; /* Matching a color from Home.css */
+  margin-bottom: 20px;
+} 
