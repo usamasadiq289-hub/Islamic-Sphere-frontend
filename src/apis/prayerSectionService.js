@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/api/prayer-section';
+const API_URL = 'https://islamic-sphere-backend-two.vercel.app/api/prayer-section';
 
 // Create axios instance with default config
 const api = axios.create({

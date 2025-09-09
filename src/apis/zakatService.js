@@ -1,5 +1,5 @@
 export const getZakatPrices = async () => {
-    const res = await fetch('http://localhost:3000/api/zakat/prices');
+    const res = await fetch('https://islamic-sphere-backend-two.vercel.app/api/zakat/prices');
     if (!res.ok) throw new Error('Failed to fetch zakat prices');
     const data = await res.json();
     

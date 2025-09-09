@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/sessions';  // Adjust this URL based on your backend API endpoint
+const API_URL = 'https://islamic-sphere-backend-two.vercel.app/sessions';  // Adjust this URL based on your backend API endpoint
 
 const api = axios.create({
   baseURL: API_URL,

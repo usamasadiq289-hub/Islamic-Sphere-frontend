@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/auth';
+const API_URL = 'https://islamic-sphere-backend-two.vercel.app/auth';
 
 // Create axios instance with default config
 const api = axios.create({

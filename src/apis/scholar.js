@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/scholars'; // Adjust if your backend runs on a different port
+const API_URL = 'https://islamic-sphere-backend-two.vercel.app/scholars'; // Adjust if your backend runs on a different port
 
 const api = axios.create({
   baseURL: API_URL,

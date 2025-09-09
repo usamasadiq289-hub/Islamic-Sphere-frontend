@@ -6,7 +6,7 @@
 //   };
 
 // prayerService.js
-const API_BASE_URL = 'http://localhost:3000/api/prayer';
+const API_BASE_URL = 'https://islamic-sphere-backend-two.vercel.app/api/prayer';
 
 export const getPrayerTimes = async (lat, lng) => {
   try {
