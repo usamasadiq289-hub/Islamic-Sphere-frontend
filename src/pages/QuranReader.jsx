@@ -50,14 +50,14 @@ useEffect(() => {
     
     try {
       // Fetch Arabic text
-      const arabicResponse = await fetch(`http://api.alquran.cloud/v1/juz/${juzNumber}/quran-uthmani`);
+      const arabicResponse = await fetch(`https://api.alquran.cloud/v1/juz/${juzNumber}/quran-uthmani`);
       if (!arabicResponse.ok) {
         throw new Error(`HTTP error! status: ${arabicResponse.status}`);
       }
       const arabicData = await arabicResponse.json();
       
       // Fetch Urdu translation
-      const urduResponse = await fetch(`http://api.alquran.cloud/v1/juz/${juzNumber}/ur.junagarhi`);
+      const urduResponse = await fetch(`https://api.alquran.cloud/v1/juz/${juzNumber}/ur.junagarhi`);
       if (!urduResponse.ok) {
         throw new Error(`HTTP error! status: ${urduResponse.status}`);
       }
@@ -102,14 +102,14 @@ useEffect(() => {
 
     try {
       // Fetch Arabic text
-      const arabicResponse = await fetch(`http://api.alquran.cloud/v1/page/${pageNumber}/quran-uthmani`);
+      const arabicResponse = await fetch(`https://api.alquran.cloud/v1/page/${pageNumber}/quran-uthmani`);
       if (!arabicResponse.ok) {
         throw new Error(`HTTP error! status: ${arabicResponse.status}`);
       }
       const arabicData = await arabicResponse.json();
 
       // Fetch English translation
-      const englishResponse = await fetch(`http://api.alquran.cloud/v1/page/${pageNumber}/en.asad`);
+      const englishResponse = await fetch(`https://api.alquran.cloud/v1/page/${pageNumber}/en.asad`);
       if (!englishResponse.ok) {
         throw new Error(`HTTP error! status: ${englishResponse.status}`);
       }

@@ -337,7 +337,7 @@ const QnA = () => {
                 >
                   <div className="scholar-image">
                     <img 
-                      src={scholar.image ? `http://localhost:3000/uploads/${scholar.image}` : DEFAULT_SCHOLAR_IMAGE} 
+                      src={scholar.image ? `https://islamic-sphere-backend-two.vercel.app/uploads/${scholar.image}` : DEFAULT_SCHOLAR_IMAGE} 
                       alt={scholar.name} 
                       onError={(e) => {
                         e.target.onerror = null;
@@ -363,7 +363,7 @@ const QnA = () => {
                   <div className="scholar-header">
                     <div className="scholar-large-image">
                       <img 
-                        src={activeScholar.image ? `http://localhost:3000/uploads/${activeScholar.image}` : DEFAULT_SCHOLAR_IMAGE} 
+                        src={activeScholar.image ? `https://islamic-sphere-backend-two.vercel.app/uploads/${activeScholar.image}` : DEFAULT_SCHOLAR_IMAGE} 
                         alt={activeScholar.name} 
                         onError={(e) => {
                           e.target.onerror = null;
@@ -517,7 +517,7 @@ const QnA = () => {
 
                 // Use actual session and scholar data
                 const sessionImg = session.image || 'https://via.placeholder.com/400x200?text=Islamic+Session';
-                const scholarImg = scholar?.image ? `http://localhost:3000/uploads/${scholar.image}` : DEFAULT_SCHOLAR_IMAGE;
+                const scholarImg = scholar?.image ? `https://islamic-sphere-backend-two.vercel.app/uploads/${scholar.image}` : DEFAULT_SCHOLAR_IMAGE;
                 const scholarName = scholar?.name || 'Scholar';
 
                 return (
@@ -676,7 +676,7 @@ const QnA = () => {
 
                 // Use actual session and scholar data
                 const sessionImg = session.image || 'https://via.placeholder.com/400x200?text=Upcoming+Session';
-                const scholarImg = scholar?.image ? `http://localhost:3000/uploads/${scholar.image}` : DEFAULT_SCHOLAR_IMAGE;
+                const scholarImg = scholar?.image ? `https://islamic-sphere-backend-two.vercel.app/uploads/${scholar.image}` : DEFAULT_SCHOLAR_IMAGE;
                 const scholarName = scholar?.name || 'Scholar';
 
                 return (
