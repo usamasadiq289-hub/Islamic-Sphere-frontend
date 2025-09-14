@@ -354,6 +354,128 @@ text-align: center;
   margin-bottom: 6rem;
 }
 
+/* Scholar Search Styles */
+.scholar-search-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.scholar-search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 2px solid rgba(5, 81, 96, 0.1);
+  border-radius: 25px;
+  box-shadow: 0 4px 15px rgba(5, 81, 96, 0.08);
+  transition: all 0.3s ease;
+}
+
+.scholar-search-wrapper:focus-within {
+  border-color: #055160;
+  box-shadow: 0 0 0 3px rgba(5, 81, 96, 0.1);
+  transform: translateY(-2px);
+}
+
+.scholar-search-wrapper .search-icon {
+  position: absolute;
+  left: 20px;
+  color: #6b7280;
+  font-size: 1.1rem;
+  z-index: 2;
+}
+
+.scholar-search-input {
+  width: 100%;
+  padding: 16px 55px 16px 55px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  background: transparent;
+  color: #2c3e50;
+  outline: none;
+}
+
+.scholar-search-input::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.clear-search-btn {
+  position: absolute;
+  right: 18px;
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.2s ease;
+}
+
+.clear-search-btn:hover {
+  background-color: rgba(5, 81, 96, 0.1);
+  color: #055160;
+}
+
+.search-results-info {
+  text-align: center;
+  margin-top: 0.8rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.no-scholars-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  text-align: center;
+  color: #6b7280;
+}
+
+.no-scholars-found p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  color: #4b5563;
+}
+
+.clear-search-suggestion {
+  background: #055160;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.clear-search-suggestion:hover {
+  background: #0a7e98;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(5, 81, 96, 0.2);
+}
+
+/* Search Highlight Styling */
+.scholar-info mark {
+  background-color: #e0c33e;
+  color: #2c3e50;
+  padding: 0.1rem 0.2rem;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
 .scholars-container {
   display: grid;
   grid-template-columns: 300px 1fr;
@@ -1584,6 +1706,44 @@ text-align: center;
   
   .scholar-header-info h2 {
     font-size: 1.5rem;
+  }
+
+  /* Scholar Search Responsive Styles */
+  .scholars-section {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .scholar-search-container {
+    max-width: 100%;
+    margin: 1.5rem auto;
+    padding: 0 1rem;
+  }
+
+  .scholar-search-input {
+    padding: 14px 50px 14px 50px;
+    font-size: 0.9rem;
+  }
+
+  .scholar-search-wrapper .search-icon {
+    left: 16px;
+    font-size: 1rem;
+  }
+
+  .clear-search-btn {
+    right: 16px;
+    width: 26px;
+    height: 26px;
+  }
+
+  .scholars-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .no-scholars-found {
+    padding: 2rem 1rem;
   }
 }
 

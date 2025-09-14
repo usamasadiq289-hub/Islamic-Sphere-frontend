@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import Navbar from '../components/Navbar';
 import { toast } from 'react-toastify';
-import { FaCalendarAlt, FaClock, FaUserAlt, FaVideo, FaMapMarkerAlt, FaUsers, FaStar, FaRegClock, FaChalkboardTeacher, FaUserTie, FaQuestionCircle, FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaStarAndCrescent } from 'react-icons/fa';
+import { FaCalendarAlt, FaClock, FaUserAlt, FaVideo, FaMapMarkerAlt, FaUsers, FaStar, FaRegClock, FaChalkboardTeacher, FaUserTie, FaQuestionCircle, FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaStarAndCrescent, FaSearch } from 'react-icons/fa';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 import './QnA.css';
 import SessionService from '../apis/session';
@@ -32,6 +32,7 @@ const QnA = () => {
   const [scholarLoading, setScholarLoading] = useState(true);
   const [scholarError, setScholarError] = useState(null);
   const [featuredSessions, setFeaturedSessions] = useState([]);
+  const [scholarSearchQuery, setScholarSearchQuery] = useState('');
 
   // Format date to display in a more readable format
 
@@ -51,6 +52,27 @@ const QnA = () => {
   // Filter sessions by scholar ID
   const getScholarSessions = (scholarId) => {
     return sessions.filter(session => session.scholarSession === scholarId);
+  };
+
+  // Filter scholars based on search query
+  const filteredScholars = scholars.filter(scholar =>
+    scholar.name.toLowerCase().includes(scholarSearchQuery.toLowerCase()) ||
+    scholar.specialty.toLowerCase().includes(scholarSearchQuery.toLowerCase()) ||
+    (scholar.bio && scholar.bio.toLowerCase().includes(scholarSearchQuery.toLowerCase()))
+  );
+
+  // Clear active scholar if they're not in filtered results
+  useEffect(() => {
+    if (activeScholar && scholarSearchQuery && !filteredScholars.some(scholar => scholar._id === activeScholar._id)) {
+      setActiveScholar(null);
+    }
+  }, [filteredScholars, activeScholar, scholarSearchQuery]);
+
+  // Function to highlight search terms
+  const highlightSearchTerm = (text, searchTerm) => {
+    if (!searchTerm.trim()) return text;
+    const regex = new RegExp(`(${searchTerm.trim()})`, 'gi');
+    return text.replace(regex, '<mark>$1</mark>');
   };
 
   // Join session handler - now supports multiple platforms
@@ -314,6 +336,34 @@ const QnA = () => {
           <p>Learn from the best Islamic scholars from around the world</p>
         </div>
 
+        {/* Scholar Search Bar */}
+        <div className="scholar-search-container">
+          <div className="scholar-search-wrapper">
+            <FaSearch className="search-icon" />
+            <input
+              type="text"
+              placeholder="Search scholars by name, specialty, or expertise..."
+              value={scholarSearchQuery}
+              onChange={(e) => setScholarSearchQuery(e.target.value)}
+              className="scholar-search-input"
+            />
+            {scholarSearchQuery && (
+              <button
+                onClick={() => setScholarSearchQuery('')}
+                className="clear-search-btn"
+                aria-label="Clear search"
+              >
+                ×
+              </button>
+            )}
+          </div>
+          {scholarSearchQuery && (
+            <div className="search-results-info">
+              {filteredScholars.length} scholar{filteredScholars.length !== 1 ? 's' : ''} found
+            </div>
+          )}
+        </div>
+
         {scholarLoading && (
           <div className="flex justify-center items-center py-8">
             <span className="text-lg text-blue-600 font-semibold">Loading scholars...</span>
@@ -329,31 +379,52 @@ const QnA = () => {
         {!scholarLoading && !scholarError && scholars.length > 0 && (
           <div className="scholars-container">
             <div className="scholars-list">
-              {scholars.map(scholar => (
-                <div
-                  key={scholar._id}
-                  className={`scholar-card ${activeScholar?._id === scholar._id ? 'active' : ''}`}
-                  onClick={() => setActiveScholar(scholar)}
-                >
-                  <div className="scholar-image">
-                    <img 
-                      src={scholar.image ? `https://islamic-sphere-backend-two.vercel.app/uploads/${scholar.image}` : DEFAULT_SCHOLAR_IMAGE} 
-                      alt={scholar.name} 
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = DEFAULT_SCHOLAR_IMAGE;
-                      }}
-                    />
-                    <div className="scholar-rating">
-                      <FaStar /> {scholar.rating}
+              {filteredScholars.length > 0 ? (
+                filteredScholars.map(scholar => (
+                  <div
+                    key={scholar._id}
+                    className={`scholar-card ${activeScholar?._id === scholar._id ? 'active' : ''}`}
+                    onClick={() => setActiveScholar(scholar)}
+                  >
+                    <div className="scholar-image">
+                      <img 
+                        src={scholar.image ? `https://islamic-sphere-backend-two.vercel.app/uploads/${scholar.image}` : DEFAULT_SCHOLAR_IMAGE} 
+                        alt={scholar.name} 
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = DEFAULT_SCHOLAR_IMAGE;
+                        }}
+                      />
+                      <div className="scholar-rating">
+                        <FaStar /> {scholar.rating}
+                      </div>
+                    </div>
+                    <div className="scholar-info">
+                      <h3 
+                        dangerouslySetInnerHTML={{
+                          __html: highlightSearchTerm(scholar.name, scholarSearchQuery)
+                        }}
+                      />
+                      <p 
+                        className="scholar-specialty"
+                        dangerouslySetInnerHTML={{
+                          __html: highlightSearchTerm(scholar.specialty, scholarSearchQuery)
+                        }}
+                      />
                     </div>
                   </div>
-                  <div className="scholar-info">
-                    <h3>{scholar.name}</h3>
-                    <p className="scholar-specialty">{scholar.specialty}</p>
-                  </div>
+                ))
+              ) : (
+                <div className="no-scholars-found">
+                  <p>No scholars found matching "{scholarSearchQuery}"</p>
+                  <button
+                    onClick={() => setScholarSearchQuery('')}
+                    className="clear-search-suggestion"
+                  >
+                    Clear search to see all scholars
+                  </button>
                 </div>
-              ))}
+              )}
             </div>
 
             {/* Scholar Details */}

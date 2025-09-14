@@ -85,6 +85,13 @@ const Chatbot = () => {
     setLoading(false);
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSend(e);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col" style={{ background: 'white' }}>
       <Navbar />
@@ -268,13 +275,14 @@ const Chatbot = () => {
           {/* Input */}
           <form onSubmit={handleSend} className="border-t border-gray-200 bg-white p-4">
             <div className="flex items-center gap-3">
-              <input
-                type="text"
-                className="flex-1 px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none text-base bg-white placeholder-gray-500"
+              <textarea
+                className="flex-1 px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none text-base bg-white placeholder-gray-500 resize-none min-h-[44px] max-h-32"
                 style={{ focusRingColor: '#055160' }}
                 placeholder="Type your message..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                rows={1}
               />
               <button
                 type="submit"

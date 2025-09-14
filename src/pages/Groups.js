@@ -34,6 +34,10 @@ const Groups = () => {
   });
   const [isProgressHidden, setIsProgressHidden] = useState(false);
   const [hiddenMembers, setHiddenMembers] = useState(selectedGroup?.hiddenMembers || []);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState('owned'); // 'owned' or 'member'
+  const [ownedGroupsSearch, setOwnedGroupsSearch] = useState('');
+  const [memberGroupsSearch, setMemberGroupsSearch] = useState('');
 
   useEffect(() => {
     fetchGroups();
@@ -140,6 +144,15 @@ const Groups = () => {
 
     setShowSettingsModal(true);
   };
+
+  // Filter groups based on search query
+  const filteredOwnedGroups = ownedGroups.filter(group =>
+    group.name.toLowerCase().includes(ownedGroupsSearch.toLowerCase())
+  );
+
+  const filteredMemberGroups = memberGroups.filter(group =>
+    group.name.toLowerCase().includes(memberGroupsSearch.toLowerCase())
+  );
 
   const updateGroupDetails = async (e) => {
     e.preventDefault();
@@ -272,6 +285,65 @@ const Groups = () => {
             </div>
           </div>
 
+          {/* Tabbed Interface */}
+          <div className="tabs-container">
+            <div className="tabs-header">
+              <button
+                className={`tab-button ${activeTab === 'owned' ? 'active' : ''}`}
+                onClick={() => setActiveTab('owned')}
+              >
+                <i className="fas fa-crown mr-2"></i>
+                My Groups
+                <span className="tab-count">{ownedGroups.length}</span>
+              </button>
+              <button
+                className={`tab-button ${activeTab === 'member' ? 'active' : ''}`}
+                onClick={() => setActiveTab('member')}
+              >
+                <i className="fas fa-users mr-2"></i>
+                Member Of
+                <span className="tab-count">{memberGroups.length}</span>
+              </button>
+            </div>
+
+            {/* Tab-specific Search Bar */}
+            <div className="tab-search-section">
+              <div className="search-container">
+                <div className="search-input-wrapper">
+                  <i className="fas fa-search search-icon"></i>
+                  <input
+                    type="text"
+                    placeholder={activeTab === 'owned' ? 'Search my groups...' : 'Search member groups...'}
+                    value={activeTab === 'owned' ? ownedGroupsSearch : memberGroupsSearch}
+                    onChange={(e) => {
+                      if (activeTab === 'owned') {
+                        setOwnedGroupsSearch(e.target.value);
+                      } else {
+                        setMemberGroupsSearch(e.target.value);
+                      }
+                    }}
+                    className="search-input"
+                  />
+                  {((activeTab === 'owned' && ownedGroupsSearch) || (activeTab === 'member' && memberGroupsSearch)) && (
+                    <button
+                      onClick={() => {
+                        if (activeTab === 'owned') {
+                          setOwnedGroupsSearch('');
+                        } else {
+                          setMemberGroupsSearch('');
+                        }
+                      }}
+                      className="clear-search-btn"
+                      aria-label="Clear search"
+                    >
+                      <i className="fas fa-times"></i>
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="content-wrapper">
             {loading && !ownedGroups.length && !memberGroups.length ? (
               <div className="loading-section">
@@ -284,87 +356,97 @@ const Groups = () => {
               </div>
             ) : (
               <div className="groups-content">
-              <section className="owned-groups">
-                <h2>Groups I Own</h2>
-                {ownedGroups.length === 0 ? (
-                  <p>You don't own any groups yet.</p>
-                ) : (
-                  <div className="groups-grid">
-                    {ownedGroups.map(group => (
-                      <div key={group._id} className="group-card">
-                        {groupCardHeader(group)}
-                        <div className="group-content">
-                          <h3>{group.name}</h3>
-                          <p>{group.description}</p>
-                          <div className="stats-container">
-                            <div className="stat-item">
-                              <span className="stat-label">Tasks:</span>
-                              <span className="stat-value">{`${group.tasks?.filter(task => task.isCompleted).length}/${group.tasks?.length || 0}`}</span>
+              {activeTab === 'owned' ? (
+                <section className="owned-groups">
+                  <h2>Groups I Own</h2>
+                  {filteredOwnedGroups.length === 0 ? (
+                    ownedGroupsSearch ? (
+                      <p>No owned groups found matching "{ownedGroupsSearch}".</p>
+                    ) : (
+                      <p>You don't own any groups yet.</p>
+                    )
+                  ) : (
+                    <div className="groups-grid">
+                      {filteredOwnedGroups.map(group => (
+                        <div key={group._id} className="group-card">
+                          {groupCardHeader(group)}
+                          <div className="group-content">
+                            <h3>{group.name}</h3>
+                            <p>{group.description}</p>
+                            <div className="stats-container">
+                              <div className="stat-item">
+                                <span className="stat-label">Tasks:</span>
+                                <span className="stat-value">{`${group.tasks?.filter(task => task.isCompleted).length}/${group.tasks?.length || 0}`}</span>
+                              </div>
+                              <div className="stat-item">
+                                <span className="stat-label">Polls:</span>
+                                <span className="stat-value">{group.polls?.length || 0}</span>
+                              </div>
+                              <div className="stat-item">
+                                <span className="stat-label">Members:</span>
+                                <span className="stat-value">{group.members?.length || 0}</span>
+                              </div>
                             </div>
-                            <div className="stat-item">
-                              <span className="stat-label">Polls:</span>
-                              <span className="stat-value">{group.polls?.length || 0}</span>
+                            <div className="button-container">
+                              <button onClick={() => navigate(`/groups/${group._id}`)} className="view-button" data-hover="View">
+                                <span>View Group</span>
+                              </button>
+                              <button onClick={() => handleDeleteGroup(group._id)} className="delete-button" data-hover="Delete">
+                                <span>Delete Group</span>
+                              </button>
                             </div>
-                            <div className="stat-item">
-                              <span className="stat-label">Members:</span>
-                              <span className="stat-value">{group.members?.length || 0}</span>
-                            </div>
-                          </div>
-                          <div className="button-container">
-                            <button onClick={() => navigate(`/groups/${group._id}`)} className="view-button" data-hover="View">
-                              <span>View Group</span>
-                            </button>
-                            <button onClick={() => handleDeleteGroup(group._id)} className="delete-button" data-hover="Delete">
-                              <span>Delete Group</span>
-                            </button>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </section>
-
-              <section className="member-groups">
-                <h2>Groups I'm In</h2>
-                {memberGroups.length === 0 ? (
-                  <p>You're not a member of any groups yet.</p>
-                ) : (
-                  <div className="groups-grid">
-                    {memberGroups.map(group => (
-                      <div key={group._id} className="group-card">
-                        {groupCardHeader(group)}
-                        <div className="group-content">
-                          <h3>{group.name}</h3>
-                          <p>{group.description}</p>
-                          <div className="stats-container">
-                            <div className="stat-item">
-                              <span className="stat-label">Tasks:</span>
-                              <span className="stat-value">{`${group.tasks?.filter(task => task.isCompleted).length}/${group.tasks?.length || 0}`}</span>
+                      ))}
+                    </div>
+                  )}
+                </section>
+              ) : (
+                <section className="member-groups">
+                  <h2>Groups I'm In</h2>
+                  {filteredMemberGroups.length === 0 ? (
+                    memberGroupsSearch ? (
+                      <p>No member groups found matching "{memberGroupsSearch}".</p>
+                    ) : (
+                      <p>You're not a member of any groups yet.</p>
+                    )
+                  ) : (
+                    <div className="groups-grid">
+                      {filteredMemberGroups.map(group => (
+                        <div key={group._id} className="group-card">
+                          {groupCardHeader(group)}
+                          <div className="group-content">
+                            <h3>{group.name}</h3>
+                            <p>{group.description}</p>
+                            <div className="stats-container">
+                              <div className="stat-item">
+                                <span className="stat-label">Tasks:</span>
+                                <span className="stat-value">{`${group.tasks?.filter(task => task.isCompleted).length}/${group.tasks?.length || 0}`}</span>
+                              </div>
+                              <div className="stat-item">
+                                <span className="stat-label">Polls:</span>
+                                <span className="stat-value">{group.polls?.length || 0}</span>
+                              </div>
+                              <div className="stat-item">
+                                <span className="stat-label">Members:</span>
+                                <span className="stat-value">{group.members?.length || 0}</span>
+                              </div>
                             </div>
-                            <div className="stat-item">
-                              <span className="stat-label">Polls:</span>
-                              <span className="stat-value">{group.polls?.length || 0}</span>
+                            <div className="button-container">
+                              <button onClick={() => navigate(`/groups/${group._id}`)} className="view-button" data-hover="View">
+                                <span>View Group</span>
+                              </button>
+                              <button onClick={() => handleLeaveGroup(group._id)} data-hover="Leave">
+                                <span>Leave Group</span>
+                              </button>
                             </div>
-                            <div className="stat-item">
-                              <span className="stat-label">Members:</span>
-                              <span className="stat-value">{group.members?.length || 0}</span>
-                            </div>
-                          </div>
-                          <div className="button-container">
-                            <button onClick={() => navigate(`/groups/${group._id}`)} className="view-button" data-hover="View">
-                              <span>View Group</span>
-                            </button>
-                            <button onClick={() => handleLeaveGroup(group._id)} data-hover="Leave">
-                              <span>Leave Group</span>
-                            </button>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </section>
+                      ))}
+                    </div>
+                  )}
+                </section>
+              )}
             </div>
             )}
           </div>
@@ -411,6 +493,12 @@ const Groups = () => {
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Group Image
                   </label>
+                  <p className="text-xs text-gray-500 mb-3 bg-blue-50 p-2 rounded-md border-l-4 border-blue-400">
+                    <i className="fas fa-info-circle text-blue-500 mr-1"></i>
+                    <strong>Image Guidelines:</strong> Upload a clear, appropriate image that represents your group. 
+                    Recommended size: 400x400px or larger. Maximum file size: 5MB. 
+                    Supported formats: JPG, PNG, GIF.
+                  </p>
                   <div className="border-2 border-dashed border-gray-200 rounded-lg p-4 text-center">
                     <input
                       type="file"
