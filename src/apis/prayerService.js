@@ -6,7 +6,8 @@
 //   };
 
 // prayerService.js
-const API_BASE_URL = 'https://islamic-sphere-backend-two.vercel.app/api/prayer';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3000';
+const API_URL = `${API_BASE_URL}/api/prayer`;
 
 export const getPrayerTimes = async (lat, lng) => {
   try {
@@ -20,7 +21,7 @@ export const getPrayerTimes = async (lat, lng) => {
       }
     };
 
-    const response = await fetch(`${API_BASE_URL}/times?lat=${lat}&lng=${lng}`, config);
+    const response = await fetch(`${API_URL}/times?lat=${lat}&lng=${lng}`, config);
     const data = await response.json();
     if (data.data && data.data.timings) {
       return data.data.timings;
@@ -76,7 +77,7 @@ export const getPrayerTimesByCity = async (city, country) => {
     const token = localStorage.getItem('token');
 
     const response = await fetch(
-      `${API_BASE_URL}/timesByCity?city=${encodeURIComponent(city)}&country=${encodeURIComponent(country)}`,
+      `${API_URL}/timesByCity?city=${encodeURIComponent(city)}&country=${encodeURIComponent(country)}`,
       {
         headers: {
           Authorization: `Bearer ${token}`
@@ -108,7 +109,7 @@ export const reverseGeocode = async (lat, lng) => {
       }
     };
 
-    const response = await fetch(`${API_BASE_URL}/reverse-geocode?lat=${lat}&lng=${lng}`, config);
+    const response = await fetch(`${API_URL}/reverse-geocode?lat=${lat}&lng=${lng}`, config);
     const data = await response.json();
     
     if (response.ok) {

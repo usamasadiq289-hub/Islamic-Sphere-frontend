@@ -25,6 +25,14 @@ const Chatbot = () => {
     loadChatHistory();
   }, []);
 
+  // Initialize textarea height
+  useEffect(() => {
+    const textarea = document.querySelector('textarea');
+    if (textarea) {
+      textarea.style.height = '44px';
+    }
+  }, []);
+
   const loadChatHistory = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -77,6 +85,12 @@ const Chatbot = () => {
     setInput("");
     setLoading(true);
     
+    // Reset textarea height when clearing input
+    const textarea = document.querySelector('textarea');
+    if (textarea) {
+      textarea.style.height = '44px';
+    }
+    
     // Add user message immediately
     setMessages(prev => [...prev, { role: "user", content: userMessage }]);
     
@@ -90,6 +104,23 @@ const Chatbot = () => {
       e.preventDefault();
       handleSend(e);
     }
+  };
+
+  // Auto-resize textarea
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
+    
+    // Reset height to auto to get the correct scrollHeight
+    e.target.style.height = 'auto';
+    
+    // Calculate new height based on content
+    const scrollHeight = e.target.scrollHeight;
+    const minHeight = 44; // minimum single line height
+    const maxHeight = 200; // increased max height for more lines
+    
+    // Set height based on scrollHeight, with min and max constraints
+    const newHeight = Math.min(Math.max(scrollHeight, minHeight), maxHeight);
+    e.target.style.height = newHeight + 'px';
   };
 
   return (
@@ -274,13 +305,19 @@ const Chatbot = () => {
           </div>
           {/* Input */}
           <form onSubmit={handleSend} className="border-t border-gray-200 bg-white p-4">
-            <div className="flex items-center gap-3">
+            <div className="flex items-end gap-3">
               <textarea
-                className="flex-1 px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none text-base bg-white placeholder-gray-500 resize-none min-h-[44px] max-h-32"
-                style={{ focusRingColor: '#055160' }}
+                className="flex-1 px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none text-base bg-white placeholder-gray-500 resize-none overflow-y-auto"
+                style={{ 
+                  focusRingColor: '#055160',
+                  minHeight: '44px',
+                  maxHeight: '200px',
+                  lineHeight: '1.5',
+                  height: '44px'
+                }}
                 placeholder="Type your message..."
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
+                onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
                 rows={1}
               />

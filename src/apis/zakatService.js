@@ -1,5 +1,7 @@
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3000';
+
 export const getZakatPrices = async () => {
-    const res = await fetch('https://islamic-sphere-backend-two.vercel.app/api/zakat/prices');
+    const res = await fetch(`${API_BASE_URL}/api/zakat/prices`);
     if (!res.ok) throw new Error('Failed to fetch zakat prices');
     const data = await res.json();
     

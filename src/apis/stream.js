@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const API_BASE = process.env.REACT_APP_API_BASE_URL || 'https://islamic-sphere-backend-two.vercel.app';
-const API_URL = `${API_BASE}/api/stream`;
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3000';
+const API_URL = `${API_BASE_URL}/api/stream`;
 
 // Create axios instance with default config
 const api = axios.create({
